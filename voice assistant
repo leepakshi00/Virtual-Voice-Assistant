@@ -1,0 +1,442 @@
+from click import command
+import pyttsx3
+from platform import machine
+import speech_recognition as sr
+import os
+import datetime
+import speech_recognition as sr
+import webbrowser
+import playsound
+import random
+import wikipedia
+from gtts import gTTS
+from tkinter import *
+from PIL import ImageTk,Image
+import pyjokes
+import pywhatkit
+
+r = sr.Recognizer()
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)
+
+
+
+
+def speak(audio):
+    global root
+    global userText
+    userText.set(audio)
+    root.update()
+    engine.say(audio)
+    engine.runAndWait()
+
+
+
+def wishMe():
+    hour=int(datetime.datetime.now().hour)
+    if hour>=0 and hour<= 12:
+        speak("Good Morning!!")
+
+    elif hour>=12 and hour<=18:
+        speak("Good Afternoon!!")
+
+    else:
+        speak("Good Evening!!")
+    
+    speak("I am your Assistant. How may i help you")
+
+
+def subtract():
+    try:
+        with sr.Microphone() as source:
+            speak('Say First Number :')
+            voice = r.listen(source)
+            query = r.recognize_google(voice)
+            num1 = query
+            n1 = int(query)
+            print('Your First Number :' + num1)
+            speak('Say Second Number :')
+
+            voice = r.listen(source)
+            query = r.recognize_google(voice)
+            num2 = query
+            n2 = int(query)
+            print('Your Second Number :' + num2)
+            n3 = n1 - n2
+            sub1 = str(n3)
+            return sub1
+    except Exception as e:
+        print(e)
+
+
+def multiplication():
+    try:
+        with sr.Microphone() as source:
+            speak('Say First Number :')
+            voice = r.listen(source)
+            query = r.recognize_google(voice)
+            num1 = query
+            n1 = int(query)
+            print('Your First Number :' + num1)
+            speak('Say Second Number :')
+
+            voice = r.listen(source)
+            query = r.recognize_google(voice)
+            num2 = query
+            n2 = int(query)
+            print('Your Second Number :' + num2)
+            n3 = n1 * n2
+            sub1 = str(n3)
+            return sub1
+    except Exception as e:
+        print(e)
+
+
+def division():
+    try:
+        with sr.Microphone() as source:
+            speak('Say First Number :')
+            voice = r.listen(source)
+            query = r.recognize_google(voice)
+            num1 = query
+            n1 = int(query)
+            print('Your First Number :' + num1)
+            speak('Say Second Number :')
+
+            voice = r.listen(source)
+            query = r.recognize_google(voice)
+            num2 = query
+            n2 = int(query)
+            print('Your Second Number :' + num2)
+            n3 = n1 / n2
+            sub1 = str(n3)
+            return sub1
+
+    except Exception as e:
+        print(e)
+
+
+
+def addition():
+    try:
+        with sr.Microphone() as source:
+            speak('Say First Number :')
+            voice = r.listen(source)
+            query = r.recognize_google(voice)
+            num1 = query
+            n1 = int(query)
+            print('Your First Number :' + num1)
+            speak('Say Second Number :')
+
+            voice = r.listen(source)
+            query = r.recognize_google(voice)
+            num2 = query
+            n2 = int(query)
+            print('Your Second Number :' + num2)
+            n3 = n1 + n2
+            sum1 = str(n3)
+            return sum1
+    except Exception as e:
+        print(e)
+
+
+def you():
+    try:
+        s = ['I am Good. Thanks Dear..','I\'m preety Good, Thanks..','Hi, I can\'t Complaint. Thanks for asking ','not too shabby..Thanks for asking..']
+        return random.choice(s)
+    except:
+        pass
+
+def rel():
+    try:
+        s=['I am in a relationship with wifi..','I\'m married to the idea of helping people..','If you are asking for a date sorry, I have a headache']
+        return random.choice(s)
+    except:
+        pass
+
+def love():
+    try:
+        s=['I think You\'re Pretty.','well, I enjoy spending quality time with you.','You have my utmost admiration']
+        return random.choice(s)
+    except:
+        pass
+
+def doing():
+    try:
+        s=['I\'m painting a self-portait. It\'s rather abstract.','I\'m trying to be a good guide for you. ','I\'m learning new words, like "cattyampus", You could just say "diagonal",but that\'s not as fun.','I\'m learning new tricks. Try asking me what I can do for you.']
+        return random.choice(s)
+    except:
+         pass
+
+def takequery():
+
+    
+    with sr.Microphone() as source:
+        print("Listening...")
+        speak('Listening')
+        
+    
+        audio = r.listen(source)
+
+    try:
+        print("recognizing....")
+        speak("Recognizing")
+        query = r.recognize_google(audio, language='en-in')
+        print(f"user said: {query}\n")
+    
+    except Exception as e:
+        print("Say that again please")
+        speak('Say that again please')
+        return "None"
+    return query
+
+root=None
+class Widget:
+    def _init_(self):
+
+        global root
+        
+        root=Tk()
+
+        root.title('Integrated Project')
+        root.geometry('520x320')
+        # root.minsize(1000,500)
+        # root.maxsize(200,200)
+
+        scrollbar=Scrollbar()
+        scrollbar.pack(side=RIGHT)
+
+        img=ImageTk.PhotoImage(Image.open('1.jpg'))
+        panel =Label(root, image=img)
+        panel.pack(side='right',expand=0)
+
+        global userText
+        userText =StringVar()
+
+        userText.set('Welcome!!')
+        userFrame =LabelFrame(root, text='Virtual Assistant',font=('Railways',50,'italic'))
+        userFrame.pack(fill='both',expand=1)
+
+        top=Message(userFrame,textvariable=userText,bg='#b8e0d2',fg='black')
+        top.config(font=("Century Gothic",30,'bold'))
+        top.pack(side='top',fill='both',expand=1)
+
+        btn=Button(root, text='Run', font=('railways',20,'bold'),bg= '#95b8d1',fg='black',command=run).pack(fill='x',expand=0)
+        
+        btn1=Button(root, text='Exit', font=('railways',20,'bold'),bg='#809bce',fg='black',command=root.destroy).pack(fill='x',expand=0)
+        
+        root.mainloop()
+
+
+
+
+def run():
+    wishMe()
+    while True:
+        query = takequery().lower()
+        if 'add' in query:
+            sol = addition()
+            speak("sum is "+sol)
+            print("sum is "+sol)
+            break
+
+        elif 'wikipedia' in query:
+            speak('Searching wikkipedia.....')
+            query = query.replace('wikipedia', "")
+            results = wikipedia.summary(query,sentences=1)
+            speak("According to wikipedia")
+            
+            speak(results)
+            break
+
+        elif 'open youtube' in query:
+            speak('Opening youtube')
+            webbrowser.open("youtube.com")
+            break
+        
+        elif 'open google' in query:
+            speak('Opening Google ')
+            webbrowser.open("google.com")
+            break
+
+        elif 'open amazon' in query:
+            speak('Opening amazon')
+            webbrowser.open("amazon.com")
+            break
+        elif 'news' in query:
+            speak('Showing Google News')
+            webbrowser.open("https://www.abplive.com/")
+            break
+
+        elif 'open code' in query:
+            path = 'E:\\project\\tkinter\\laila2.py'
+            os.startfile(path)
+            speak('Opening Code')
+            break
+
+        
+        elif 'play' in query:
+            song = query.replace('play', '')
+            speak('playing ' + song)
+            pywhatkit.playonyt(song)
+            break
+
+        elif 'song' in query:
+            song = query.replace('play', '')
+            speak('playing ' + song)
+            pywhatkit.playonyt(song)
+            break
+
+        elif 'gmail' in query:
+            webUrl = webbrowser.open_new('https://mail.google.com/mail/u/0/#inbox')
+            speak('Opening Gmail')
+            print(webUrl)
+            break
+
+        elif 'joke' in query:
+            x=pyjokes.get_joke()
+            speak(x)
+            print(x)
+            break
+
+        elif 'likiden' in query:
+            webUrl = webbrowser.open_new('https://www.linkedin.com/feed/')
+            speak('Opening Linkiden')
+            print(webUrl)
+            break
+
+        elif 'subtract' in query:
+            sol1 =subtract()
+            speak("Difference is"+sol1)
+            print("Difference is"+sol1)
+            break
+            
+        elif 'multiply' in query:
+            sol1=multiplication()
+            speak("Product is"+sol1)
+            break
+
+        elif 'divide' in query:
+            sol1=division()
+            speak("Answer is"+sol1)
+            break
+
+        elif 'hi'  in query:
+            speak('Hi, tell me how can i help you')
+            break
+        
+        elif 'what are you doing' in query:
+            do=doing()
+            speak(do)
+            print(do)
+            break
+
+       
+        elif 'number' in query:
+            number =random.randrange(0,100)
+            speak('A random number between 0 and 100 is')
+            print('A random number between 0 and 100 is')
+            speak(number)
+            print(number)
+            break
+
+        elif 'how are you' in query:
+            a =you()
+            speak(a)
+            print(a)
+            break
+
+        elif 'how' in query:
+            speak('Searching' + query)
+            info = wikipedia.summary(query, 2)
+            print(info)
+            speak(info)
+            break
+
+        elif 'time' in query:
+            time = datetime.datetime.now().strftime('%I:%M %p')
+            speak('Current time is ' + time)
+            print(time)
+            break
+        
+
+        elif 'what' in query:
+            speak('Searching'+query )
+            info = wikipedia.summary(query, 1)
+            print(info)
+            speak(info)
+            break
+
+       
+
+
+        elif 'where' in query:
+            speak('Searching' + query)
+            info = wikipedia.summary(query, 2)
+            print(info)
+            speak(info)
+            break
+
+        elif 'search' in query:
+            person = query.replace('search', '')
+            speak('Searching' + person)
+            info = wikipedia.summary(person, 2)
+            print(info)
+            speak(info)
+            break
+
+        elif 'meaning' in query:
+            speak('Searching'+query )
+            info = wikipedia.summary(query, 1)
+            print(info)
+            speak(info)
+            break
+
+        elif 'do you love me' in query:
+            lov = love()
+            print(lov)
+            speak(lov)
+            break
+       
+
+
+        
+
+        elif 'are you single' in query:
+            r =rel()
+            speak(r)
+            print(r)
+            break
+        elif 'are you dating someone' in query:
+            r =rel()
+            speak(r)
+            print(r)
+            break
+
+        elif 'joke' in query:
+            x=pyjokes.get_joke()
+            speak(x)
+            print(x)
+            break
+
+
+        elif 'exit' in query:
+            speak('Have a nice day, bye')
+            print('Have a nice day, bye')
+            break
+
+
+        elif 'bye' in query:
+            speak('Have a nice day, bye')
+            print('Have a nice day, bye')
+            break
+
+        else:
+            speak('That is out of my syllabus')
+
+
+ 
+
+if _name_ == '_main_':
+    widget = Widget()
